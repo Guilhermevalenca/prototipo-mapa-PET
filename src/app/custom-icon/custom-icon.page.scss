@@ -1,0 +1,7 @@
+.container {
+  @apply tw-flex tw-justify-center tw-items-center;
+}
+
+#map {
+  @apply tw-h-96 tw-w-96;
+}
