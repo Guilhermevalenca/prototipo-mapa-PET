@@ -34,7 +34,7 @@ export default class SimpleExemplePage implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    setTimeout(this.simpleExemple, 300);
+    setTimeout(() => this.simpleExemple(), 300);
   }
 
   private simpleExemple() {
