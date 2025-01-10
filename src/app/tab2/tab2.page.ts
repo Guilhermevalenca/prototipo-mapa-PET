@@ -26,7 +26,7 @@ export default class Tab2Page implements OnInit {
       map.on('locationfound', (e: Leaflet.LocationEvent) => {
         const radius = e.accuracy;
 
-        const marker: Marker = Leaflet.marker(e.latlng).addTo(map);
+        const marker: Marker = Leaflet.marker(e.latlng, {alt: 'Igarassu'}).addTo(map).bindPopup('Essa é sua Localização atual!! Esse é um exemplo de acessibilidade que o Leaflet permite.');
         const circle: Circle = Leaflet.circle(e.latlng, {
           radius,
         }).addTo(map);
