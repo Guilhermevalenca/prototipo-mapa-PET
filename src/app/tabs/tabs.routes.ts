@@ -11,9 +11,7 @@ export const routes: Routes = [
         loadComponent: () => import('../simple-exemple/simple-exemple.page'),
       },
       {
-        path: 'tab2',
-        loadComponent: () =>
-          import('../tab2/tab2.page'),
+        path: 'tab2', loadComponent: () => import('../tab2/tab2.page'),
       },
       {
         path: 'custom-icon',
