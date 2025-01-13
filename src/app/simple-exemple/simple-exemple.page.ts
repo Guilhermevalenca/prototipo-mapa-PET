@@ -16,6 +16,7 @@ import type {
   Popup,
   Map,
 } from 'leaflet';
+import {RenderMapLeafletService} from "../services/render-map-leaflet.service";
 
 @Component({
   selector: 'app-simple-exemple',
@@ -31,52 +32,59 @@ import type {
   ],
 })
 export default class SimpleExemplePage implements OnInit {
-  constructor() {}
+  constructor(private readonly renderMapLeafletService: RenderMapLeafletService) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      const map: Map = Leaflet.map('map')
-        .setView([51.505, -0.09], 13);
+    setTimeout(() => this.simpleExemple(), 300);
+  }
 
-      const marker: Marker = Leaflet.marker([51.5, -0.09])
-        .addTo(map);
+  private simpleExemple() {
+    const map: Map = this.renderMapLeafletService.basic('map');
 
-      const circle: Circle = Leaflet.circle([51.508, -0.11], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500,
-      })
-        .addTo(map);
+    this.marker(map);
+    this.circle(map);
+    this.polygon(map);
+    this.popup(map);
+  }
 
-      const polygon: Polygon = Leaflet.polygon([
-        [51.509, -0.08],
-        [51.503, -0.06],
-        [51.51, -0.047],
-      ])
-        .addTo(map);
+  private marker(map: Map): Marker {
+    return Leaflet.marker([51.5, -0.09])
+      .addTo(map)
+      .bindPopup("<b>Hello world!</b><br>I am a popup.")
+      .openPopup();
+  }
 
-      Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
-      })
-        .addTo(map);
+  private circle(map: Map): Circle {
+    return Leaflet.circle([51.508, -0.11], {
+      color: 'red',
+      fillColor: '#f03',
+      fillOpacity: 0.5,
+      radius: 500,
+    })
+      .addTo(map)
+      .bindPopup("I am a circle.");
+  }
 
-      marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
-      circle.bindPopup("I am a circle.");
-      polygon.bindPopup("I am a polygon.");
+  private polygon(map: Map): Polygon {
+    return Leaflet.polygon([
+      [51.509, -0.08],
+      [51.503, -0.06],
+      [51.51, -0.047],
+    ])
+      .addTo(map)
+      .bindPopup("I am a polygon.");
+  }
 
-      const popup: Popup = Leaflet.popup();
+  private popup(map: Map): Popup {
+    const popup: Popup = Leaflet.popup();
 
-      function onMapClick(e: Leaflet.LeafletMouseEvent) {
-        popup
-          .setLatLng(e.latlng)
-          .setContent("Você clicou no mapa em " + e.latlng.toString())
-          .openOn(map);
-      }
+    map.on('click', (e: Leaflet.LeafletMouseEvent) => {
+      popup
+        .setLatLng(e.latlng)
+        .setContent("Você clicou no mapa em " + e.latlng.toString())
+        .openOn(map);
+    });
 
-      map.on('click', onMapClick);
-
-    }, 300);
+    return popup;
   }
 }
