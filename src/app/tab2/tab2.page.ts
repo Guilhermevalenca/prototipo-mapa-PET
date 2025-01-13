@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import * as Leaflet from 'leaflet';
-import type { Map, Marker, Circle } from 'leaflet';
+import type {Map, Marker, Circle, Icon} from 'leaflet';
 import {RenderMapLeafletService} from "../services/render-map-leaflet.service";
 
 @Component({
@@ -22,10 +22,18 @@ export default class Tab2Page implements OnInit {
       map.on('locationfound', (e: Leaflet.LocationEvent) => {
         const radius = e.accuracy;
 
-        const marker: Marker = Leaflet.marker(e.latlng, {alt: 'Igarassu'}).addTo(map).bindPopup('Essa é sua Localização atual!! Esse é um exemplo de acessibilidade que o Leaflet permite.');
+        const marker: Marker = Leaflet.marker(e.latlng, {
+          alt: 'Igarassu',
+          icon: Leaflet.icon({
+            iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          })
+        })
+          .addTo(map)
+          .bindPopup('Essa é sua Localização atual!! Esse é um exemplo de acessibilidade que o Leaflet permite.');
         const circle: Circle = Leaflet.circle(e.latlng, {
           radius,
-        }).addTo(map);
+        })
+          .addTo(map);
 
       });
 
