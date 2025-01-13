@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import * as Leaflet from 'leaflet';
 import type { Map, Marker, Circle } from 'leaflet';
+import {RenderMapLeafletService} from "../services/render-map-leaflet.service";
 
 @Component({
   selector: 'app-tab2',
@@ -10,16 +11,11 @@ import type { Map, Marker, Circle } from 'leaflet';
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export default class Tab2Page implements OnInit {
-  constructor() {}
+  constructor(private readonly renderMapLeafletService: RenderMapLeafletService) {}
 
   ngOnInit() {
     setTimeout(() => {
-      const map: Map = Leaflet.map('map').fitWorld();
-
-      Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '© OpenStreetMap',
-      }).addTo(map);
+      const map: Map = this.renderMapLeafletService.basic('map');
 
       map.locate({ setView: true, maxZoom: 16 });
 

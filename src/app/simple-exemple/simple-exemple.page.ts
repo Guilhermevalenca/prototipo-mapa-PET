@@ -16,6 +16,7 @@ import type {
   Popup,
   Map,
 } from 'leaflet';
+import {RenderMapLeafletService} from "../services/render-map-leaflet.service";
 
 @Component({
   selector: 'app-simple-exemple',
@@ -31,21 +32,14 @@ import type {
   ],
 })
 export default class SimpleExemplePage implements OnInit {
-  constructor() {}
+  constructor(private readonly renderMapLeafletService: RenderMapLeafletService) {}
 
   ngOnInit() {
     setTimeout(() => this.simpleExemple(), 300);
   }
 
   private simpleExemple() {
-    const map: Map = Leaflet.map('map')
-      .setView([51.505, -0.09], 13);
-
-    Leaflet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
-    })
-      .addTo(map);
+    const map: Map = this.renderMapLeafletService.basic('map');
 
     this.marker(map);
     this.circle(map);

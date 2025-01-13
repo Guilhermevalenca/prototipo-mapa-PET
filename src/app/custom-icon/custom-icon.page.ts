@@ -11,8 +11,7 @@ import {RenderMapLeafletService} from "../services/render-map-leaflet.service";
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
 })
 export default class CustomIconPage implements OnInit {
-  private readonly renderMapLeafletService: RenderMapLeafletService = new RenderMapLeafletService();
-  constructor() {}
+  constructor(private readonly renderMapLeafletService: RenderMapLeafletService) {}
 
   ngOnInit() {
     setTimeout(() => this.markersWithCustomIcons(), 300);
