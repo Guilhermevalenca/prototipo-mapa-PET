@@ -8,7 +8,7 @@ import {
   IonTitle,
   IonContent,
 } from '@ionic/angular/standalone';
-import Leaflet from 'leaflet';
+import Leaflet, {type Icon} from 'leaflet';
 import type {
   Marker,
   Circle,
@@ -48,7 +48,11 @@ export default class SimpleExemplePage implements OnInit {
   }
 
   private marker(map: Map): Marker {
-    return Leaflet.marker([51.5, -0.09])
+    return Leaflet.marker([51.5, -0.09], {
+      icon: Leaflet.icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      })
+    })
       .addTo(map)
       .bindPopup("<b>Hello world!</b><br>I am a popup.")
       .openPopup();
